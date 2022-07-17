@@ -1,15 +1,14 @@
-use std::sync::{mpsc, Mutex, Arc};
-
-mod worker;
 mod job;
 mod message;
+mod worker;
 
-use self::worker::Worker;
-use self::message::Message;
+use std::sync::{mpsc, Arc, Mutex};
+
+use self::{message::Message, worker::Worker};
 
 pub struct ThreadPool {
     workers: Vec<Worker>,
-    sender: mpsc::Sender<Message>
+    sender: mpsc::Sender<Message>,
 }
 
 impl ThreadPool {
@@ -18,7 +17,7 @@ impl ThreadPool {
 
         let (sender, receiver) = mpsc::channel();
         let receiver = Arc::new(Mutex::new(receiver));
-        
+
         let mut workers = Vec::with_capacity(size);
 
         for id in 0..size {

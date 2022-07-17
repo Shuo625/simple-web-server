@@ -1,11 +1,13 @@
-use std::thread;
-use std::sync::{mpsc, Mutex, Arc};
+use std::{
+    sync::{mpsc, Arc, Mutex},
+    thread,
+};
 
 use super::message::Message;
 
 pub struct Worker {
     pub id: usize,
-    pub thread: Option<thread::JoinHandle<()>>
+    pub thread: Option<thread::JoinHandle<()>>,
 }
 
 impl Worker {
@@ -28,8 +30,8 @@ impl Worker {
         });
 
         Worker {
-            id, 
-            thread: Some(thread)
+            id,
+            thread: Some(thread),
         }
     }
 }
