@@ -1,10 +1,10 @@
-use std::net::{TcpListener, TcpStream};
-use std::io::prelude::*;
-use std::fs;
+use std::{
+    fs,
+    io::prelude::*,
+    net::{TcpListener, TcpStream},
+};
 
-mod threadpool;
-
-use self::threadpool::ThreadPool;
+use simple_web_server_rust::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -13,7 +13,7 @@ fn main() {
     for stream in listener.incoming().take(2) {
         let stream = stream.unwrap();
 
-        threadpool.execute(|| { handle_connection(stream) });        
+        threadpool.execute(|| handle_connection(stream));
     }
 }
 
